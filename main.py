@@ -20,22 +20,22 @@ steps_per_epoch = None  # 每轮步数
 maxlen = 256  # 最大长度
 batch_size =32 # 根据gpu显存设置
 learning_rate = 1e-3
-rorobert_learning_rate = 5e-6
+bert_learning_rate = 5e-6
 warm_factor = 0.1
 weight_decay = 0
-use_robert_last_4_layers = True
+use_bert_last_4_layers = True
 categories = {'LOC': 2, 'PER': 3, 'ORG': 4} # 根据数据集设置
 label_num = len(categories) + 2
 
 # 模型参数：网络结构
 lex_emb_size = 200
 syn_emb_size = 100
-rorobert_hid_size = 768
+bert_hid_size = 768
 emb_dropout = 0.5
 conv_dropout = 0.5
 out_dropout = 0.33
 
-# Rorobert base
+# bert base
 config_path = '' # 预训练文件位置
 checkpoint_path = ''  # 预训练文件位置
 dict_path = ''  # 预训练文件位置
@@ -56,7 +56,7 @@ def convert_text_to_index(text):
     index = [int(x) for x in index.split("-")]
     return index, int(type)
 
-model = Model(use_rorobert).to(device)
+model = Model(use_bert).to(device)
 
 class Loss(nn.CrossEntropyLoss):
     def forward(self, outputs, labels):
@@ -64,15 +64,15 @@ class Loss(nn.CrossEntropyLoss):
         grid_mask2d = grid_mask2d.clone()
         return super().forward(outputs[grid_mask2d], grid_labels[grid_mask2d])
 
-rorobert_params = set(model.rorobert.parameters())
-other_params = list(set(model.parameters()) - robert_params)
+bert_params = set(model.bert.parameters())
+other_params = list(set(model.parameters()) - bert_params)
 no_decay = ['bias', 'LayerNorm.weight']
 params = [
-    {'params': [p for n, p in model.rorobert.named_parameters() if not any(nd in n for nd in no_decay)],
-     'lr': robert_learning_rate,
+    {'params': [p for n, p in model.robert.named_parameters() if not any(nd in n for nd in no_decay)],
+     'lr': bert_learning_rate,
      'weight_decay': weight_decay},
-    {'params': [p for n, p in model.rrobert.named_parameters() if any(nd in n for nd in no_decay)],
-     'lr': robert_learning_rate,
+    {'params': [p for n, p in model.rbert.named_parameters() if any(nd in n for nd in no_decay)],
+     'lr': bert_learning_rate,
      'weight_decay': 0.0},
     {'params': other_params,
      'lr': learning_rate,
