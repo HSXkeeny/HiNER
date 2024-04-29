@@ -20,7 +20,11 @@ Due to data sharing limitations, we provide links to the datasets:
 
 Download the data set and conduct experiments according to the relevant settings of the data loader.
 
-## 2. Thanks
+## 2. Set up
+
+[BERT](https://huggingface.co/google-bert/bert-base-uncased) is used for character embedding, [Chinese dictionary TX](https://github.com/CoderMusou/NFLAT4CNER?tab=readme-ov-file) is used for lexical embedding, and [NLP tools](https://stanfordnlp.github.io/CoreNLP/) are used for syntactic embedding. For each part of the model, view the model.py file. Main.py is used for training and evaluation. The file location is replaced with your own file location.
+
+## 3. Thanks
 
 Our code is based on [bert4torch](https://github.com/Tongjilibo/bert4torch), and thanks to the work of [W2NER](https://github.com/ljynlp/W2NER).
 
