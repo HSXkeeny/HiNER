@@ -106,7 +106,7 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:, :x.size(1), :]
         return self.dropout(x)
 
-# 放射变化
+# 仿射变化
 class Biaffine(nn.Module):
 
     def __init__(self, n_in, n_out=1, bias_x=True, bias_y=True):
