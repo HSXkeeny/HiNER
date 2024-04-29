@@ -1,4 +1,4 @@
-# 定义robert上的模型结构
+# 定义bert上的模型结构
 class ConvolutionLayer(nn.Module):
 
     def __init__(self, input_size, channels, dilation, dropout=0.1):
